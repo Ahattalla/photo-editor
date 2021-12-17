@@ -51,9 +51,12 @@ extension PhotoEditorViewController {
 
     @IBAction func textButtonTapped(_ sender: Any) {
         isTyping = true
-        let textView = UITextView(frame: CGRect(x: 0, y: canvasImageView.center.y,
-                                                width: UIScreen.main.bounds.width, height: 30))
+        let textView = UITextView()
         
+        let textViewContainerView = UIView()
+        
+
+        textViewContainerView.backgroundColor = .red
         textView.textAlignment = .center
         textView.font = UIFont(name: "Helvetica", size: 30)
         textView.textColor = textColor
@@ -65,8 +68,23 @@ extension PhotoEditorViewController {
         textView.autocorrectionType = .no
         textView.isScrollEnabled = false
         textView.delegate = self
-        self.canvasImageView.addSubview(textView)
-        addGestures(view: textView)
+        
+        textViewContainerView.translatesAutoresizingMaskIntoConstraints = false
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.canvasImageView.addSubview(textViewContainerView)
+        textViewContainerView.addSubview(textView)
+        
+        textViewContainerView.topAnchor.constraint(equalTo: textView.topAnchor, constant: 0).isActive = true
+        textViewContainerView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0).isActive = true
+        textViewContainerView.leftAnchor.constraint(equalTo: textView.leftAnchor, constant: 0).isActive = true
+        textViewContainerView.rightAnchor.constraint(equalTo: textView.rightAnchor, constant: 0).isActive = true
+        
+        textViewContainerView.frame = CGRect(x: UIScreen.main.bounds.height / 2, y: UIScreen.main.bounds.width / 2,width: 0, height: 0)
+        
+        print(textViewContainerView.constraints.count)
+        
+        addGestures(view: textViewContainerView)
         textView.becomeFirstResponder()
     }    
     
